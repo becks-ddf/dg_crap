@@ -14,6 +14,10 @@ class BookListView(generic.ListView):
     paginate_by = 2
 
 
+class AuthorListView(generic.ListView):
+    model = Author
+    context_object_name = 'author_list'  # your own name for the list as a template variable
+    queryset = Author.objects.all()
 
 def index(request):
     """View function for home page of site."""
@@ -47,11 +51,14 @@ def index(request):
 class BookDetailView(generic.DetailView):
     model = Book
 
-def book_detail_view(request, primary_key):
-    try:
-        book = Book.objects.get(pk=primary_key)
-    except Book.DoesNotExist:
-        raise Http404('Book does not exist')
+class AuthorDetailView(generic.DetailView):
+    model = Author
 
-    return render(request, 'catalog/book_detail.html', context={'book': book})
+# def book_detail_view(request, primary_key):
+#     try:
+#         book = Book.objects.get(pk=primary_key)
+#     except Book.DoesNotExist:
+#         raise Http404('Book does not exist')
+#
+#     return render(request, 'catalog/book_detail.html', context={'book': book})
 
